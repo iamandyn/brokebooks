@@ -1,0 +1,63 @@
+<footer class="footer text-light bg-secondary pt-4 mt-5" style=" position: relative; left:0; bottom:0; right:0; max-height: 190px; overflow: hidden;">
+  <div class="container text-center text-md-left" >
+    <div class="row pl-5">
+      <div class="col md-6 mt-md-0 mt-3">
+        <h5 class="text-uppercase">Disclaimer:</h5>
+        <p>This website was created by students at George Mason University. Use at your own risk.</p>
+      </div>
+      <hr class="clearfix w-100 d-md-none pb-4">
+      <% if logged_in? %>
+        <div class="col-md-3 mb-md-0 mb-3">
+          <h5 class="text-uppercase text-white-50">Navigation</h5>
+          <ul class="list-unstyled">
+            <li>
+              <%= link_to "Home", root_path, class: "text-white" %>
+            </li>
+            <li>
+              <%= link_to "All Listings", books_url, class: "text-white"  %> 
+            </li>
+            <li>
+              <%= link_to "Users", '/users', class: "text-white"  %>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-3 mb-md-0 mb-3">
+          <h5 class="text-uppercase text-white-50">Account</h5>
+          <ul class="list-unstyled">
+            <li>
+              <%= link_to "View Profile", current_user, class: "text-white"  %>
+            </li>
+            <li>
+              <%= link_to "Log out", logout_path, method: :delete, class: "text-white"  %>
+            </li>
+          </ul>
+        </div>
+      <% else %>  <!-- Logged out-->
+        <div class="col-md-3 mb-md-0 mb-3">
+          <h5 class="text-uppercase">Navigation</h5>
+          <ul class="list-unstyled">
+            <li>
+              <%= link_to "Home", root_path, class: "text-white"%>
+            </li>
+            <li>
+              <%= link_to "All Listings", books_url, class: "text-white" %> 
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-3 mb-md-0 mb-3">
+          <h5 class="text-uppercase">Account</h5>
+          <ul class="list-unstyled">
+            <button type="button" class="btn btn-link text-light" style="text-decoration: none;" data-toggle="modal" data-target="#signInModal">
+            Log In
+            </button>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+    </div>
+    <!-- Copyright -->
+    <div class="footer-copyright text-white-50 bg-dark text-center py-3"> © 2018 Copyright:
+      Brokebooks
+    </div>
+    <!-- Copyright -->
+</footer>

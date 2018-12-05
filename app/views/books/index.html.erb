@@ -1,0 +1,141 @@
+<div class="container">
+	<div class="row mt-3">
+		<div class="col">
+			<div class="page-header">
+	  			<h1>All Listings</h1>
+			</div>
+		</div>
+		<% if logged_in? %>
+			<div class="col mt-1 text-right">
+				<%= link_to "Post a Book", new_book_path, class: "btn btn-success btn-lg float-right mr-3" %>
+			</div>
+		<% end %>
+	</div>
+ 	<div class="d-flex justify-content-center align-content-center">
+		<%= will_paginate @books, :renderer => WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+	</div>
+	<div class="row">
+		<div class="col">
+			<table class="table text-center">
+				<thead class="link-light">
+					<tr class="bg-secondary text-white">
+						<th scope="col" style="width: 100px">Thumbnail</th>
+						<th scope="col" style="width: 200px">
+							<%= sortable "title"%>
+						</th>
+						<th scope="col" style="width: 200px">
+							<%= sortable "author" %>
+						</th>
+						<th scope="col" style="width: 200px">
+							<%= sortable "isbn" %>
+						</th>
+						<th scope="col" style="width: 100px">
+							<%= sortable "condition" %>
+						</th>
+						<th scope="col" style="width: 100px">
+							<%= sortable "price" %>
+						</th>
+						<th scope="col" style="width: 100px">
+							Purchase
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @books.each do |book| %>
+						<tr>
+							<td class="text-center">
+								<% if book.cover_image.attached? %>
+									<%= image_tag book.cover_image.variant(resize: "50x50") %>
+								<% else %>
+									<%= image_tag("fallback/book/thumb_default.png") %>
+								<% end %>
+							</td>
+							<td><%= book.title %></th>
+							<td><%= book.author %></td>
+							<td><%= book.isbn13 %></td>
+							<td><%= book.condition %></td>
+							<td>$<%= number_with_precision(book.price, :precision => 2) %></td>
+							<% if logged_in? %>
+								<td>
+									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bookModal<%= book.id %>">
+										Quick View
+									</button>
+
+									<!-- MODAL for BOOK -->
+									<div class="modal fade" id="bookModal<%= book.id %>" aria-labelledby="exampleModalLabel" aria-hidden="true">
+									 	<div class="modal-dialog modal-lg" role="document">
+									    	<div class="modal-content">
+									      		<div class="modal-header text-center" style="background-color: #456173; color: white;">
+										        		<h5 class="modal-title" id="exampleModalLabel">
+										        			<div class="modalTitle">
+										        				<strong><%= book.title %></strong>
+										        				<span style="font-size: 10px; width: 200px;"> 
+										        					by <%= book.author%>
+										        				</span>
+										        			</div> 
+										        		</h5>
+											        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											          	<span aria-hidden="false">&times;</span>
+											        	</button>
+									      		</div>
+									     		<div class="modal-body">
+									     			<div class="container-fluid">
+										      			<div class="row">
+										      				<div class="col-sm-6">
+										      					<% if book.cover_image.attached? %>
+																	<%= image_tag book.cover_image.variant(resize: "200x300") %>
+																<% else %>
+																	<%= image_tag("fallback/book/medium_default.png") %>
+																<% end %>
+										      				</div>
+										      				<div class="col text-left">
+										      					<strong>Title:</strong> <%= book.title %><br/>
+										      					<strong>Author:</strong> <%= book.author %><br/>
+										      					<strong>ISBN-13:</strong> <%= book.isbn13 %><br/>
+										      					<strong>ISBN-10:</strong> <%= book.isbn10 %><br/>
+										      					<strong>Condition:</strong> <%= book.condition %><br/>
+										      					<strong>Price:</strong> $<%= number_with_precision(book.price, :precision => 2) %>
+										      				</div>
+										      			</div>
+											      	</div>
+										    		</div>
+											    <div class="modal-footer">
+											    	<%= link_to  "View", book, class: "btn btn-primary"%>
+											    	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+											    </div>
+									    	</div>
+									  	</div>
+									</div>
+
+								</td>
+							<% else %>
+
+								<!-- MODAL LOGIN Button-->
+								<td> 
+									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signInModal">
+										Log In
+									</button>
+								 </td>
+
+							<% end %> <br>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="d-flex justify-content-center align-content-center">
+		<%= will_paginate @books, :renderer => WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="row outerAligned">
+    <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12 aligned">
+      <h1 class="h3 mb-3 font-weight-normal text-center text-top">Sign up</h1>
+
+      <%= form_for @user do |f| %>
+        <%= render 'shared/error_messages' %>
+
+        <div class="form-group">
+          <%= f.label :fname, "First Name" %>
+          <%= f.text_field :fname, class: 'form-control', placeholder: "First Name" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :lname, "Last Name" %>
+          <%= f.text_field :lname, class: 'form-control', placeholder: "Last Name" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :email %>
+          <%= f.email_field :email, class: 'form-control', placeholder: "Email" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password %>
+          <%= f.password_field :password, class: 'form-control', placeholder: "Password" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password_confirmation, "Confirm Password" %>
+          <%= f.password_field :password, class: 'form-control', placeholder: "Confirm Password"%>
+        </div>
+        <%= f.submit "Create my account", class: "btn btn-md btn-primary btn-block bottomPart" %>
+      <% end %>
+
+    </div>
+  </div>
+</div>
+
+<!--<div class="row outerAligned">
+  <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12 aligned">
+<% provide(:title, 'Sign up') %>
+<h1 class="h3 mb-3 font-weight-normal text-center text-top">Sign up</h1>
+
+
+
+
+<form class="form-signin">
+  <%= form_for(@user, url: signup_path) do |f| %>
+    <%= render 'shared/error_messages' %>
+
+  <div class="form-group">
+    <%= f.label :"First Name" %>
+    <%= f.text_field :fname, class: 'form-control', placeholder: "First Name" %>
+</div>
+    <br>
+<div class="form-group">
+    <%= f.label :"Last Name" %>
+    <%= f.text_field :lname, class: 'form-control', placeholder: "Last Name" %>
+</div>
+    <br>
+<div class="form-group">
+    <%= f.label :email %>
+    <%= f.email_field :email, class: 'form-control', placeholder: "Email" %>
+</div>
+    <br>
+<div class="form-group">
+    <%= f.label :password %>
+    <%= f.password_field :password, class: 'form-control', placeholder: "Password" %>
+</div>
+    <br>
+<div class="form-group">
+    <%= f.label :password_confirmation, "Confirmation" %>
+    <%= f.password_field :password_confirmation, class: 'form-control', placeholder: "Confirmation"%>
+</div>
+    <br>
+    <%= f.submit "Create my account", class: "btn btn-lg btn-primary btn-block bottomPart" %>
+  <% end %>
+</form>
+
+</div>
+</div>-->

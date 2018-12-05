@@ -1,0 +1,83 @@
+<div class="alert alert-danger" role="alert" id="unableToFill" style="display:none;text-align:center">
+  	<strong>
+  		Invalid ISBN, unable to auto-fill
+	</strong>
+</div>
+<div class="row outerAligned">
+  	<div class="col-lg-7 col-md-7 col-sm-10 col-xs-12 aligned">
+	  	<div style="margin-top:1%">
+			<span>
+				<button type ="button" class="btn btn-primary" onClick="connectToBookAPI()">
+					<strong>Auto-fill</strong>
+				</button>
+				<button type ="button" class="btn btn-primary" onClick="clearAllBookFields()">
+					<strong>Clear All</strong>
+				</button>
+			</span>
+		</div>
+		<%= form_for @book do |f| %>
+
+		  	<!-- Title Form Item -->
+			<div class="form-group">
+				<%= f.label :title %><br/>
+				<%= f.text_field :title, class: 'form-control', placeholder: "Title", id: "title" %>
+			</div>
+
+			<!-- Author Form Item -->
+			<div class="form-group">
+				<%= f.label :"author(s)" %><br/>
+				<%= f.text_field :author, class: 'form-control', placeholder: "Author(s) - separate multiple with a comma", id: "author" %>
+			</div>
+
+			<!-- ISBN Form Item -->
+			<div class="form-group">
+				<%= f.label :isbn13 %><br/>
+				<%= f.text_field :isbn13, class: 'form-control', placeholder: "ISBN-13", id: "isbn13" %>
+			</div>
+
+			<div class="form-group">
+				<%= f.label :isbn10 %><br/>
+				<%= f.text_field :isbn10, class: 'form-control', placeholder: "ISBN-10", id: "isbn10" %>
+			</div>
+
+			<!--Adding drop down for book condition -->
+			<div class="form-group">
+				<%= f.label :condition %><br/>
+				<%= f.select(:condition, options_for_select({'Like New' => 'Like New', 'Good' => 'Good', 'Acceptable' => 'Acceptable'}, @book.condition), {:include_blank => "Select Condition"})  %>
+			</div>
+
+
+			<!-- Price Form Item-->
+			<div class="form-group">
+				<%= f.label :price %><br/>
+				<%= f.text_field :price, class: 'form-control', placeholder: "Price", id: "price" %>
+			</div>
+
+		  	<!------------------------------- NEW Image Form Item -->
+		  	<div class="form-group">
+			    <strong> <%= f.label :cover_image %>: </strong>
+			    <%= f.file_field :cover_image %>
+		  	</div>
+
+		  	<!-------------------------------- For Multiple Images -->
+		  	<div class="form-group">
+			    <strong> <%= f.label :condition_images %>: </strong>
+			    <%= f.file_field :condition_images, multiple: true %>
+		  	</div>
+
+			<!--Adding a Text Description Area -->	
+			<div class="form-group">
+				<%= f.label :description %><br/>
+				<%= f.text_area :description, class: 'form-control', placeholder: "Describe your textbook", id: "description" %>
+			</div>
+
+			<%= f.hidden_field :user_id, :value => current_user.id %>
+			<div class="alignedBtn">
+				<%= f.submit "Post Book", class: "btn btn-lg btn-success bottomPart alignedBtn" %>
+			</div>
+		<% end %>
+
+	</div>
+
+	
+</div>

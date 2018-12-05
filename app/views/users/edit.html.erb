@@ -1,0 +1,142 @@
+<div class="container">
+    <div class="float-right">
+        <%= link_to "Log out", logout_path, method: :delete, class: "btn btn-success" %>
+    </div>
+
+    <div class="row my-3">
+        <div class="col-auto my-3">
+            <%=image_tag(@user.image.medium.url == nil ? "fallback/userImgDefault.png" : @user.image.medium.url, alt: "Example Image", alt: "@user.fname user.lname", class: "rounded-circle m-3", style: "height: 150px; width: 150px;")%>
+            <h2 class="text-capitalize my-3"> <%= @user.fname + " " + @user.lname %> </h2>
+        </div>
+
+        <%= form_for @user do |f| %>
+            <%= render 'shared/error_messages' %>
+        <div class="col p-5">
+            <div class="card">
+                <div class="card-header font-weight-bold">
+                    Basic Info
+                </div>
+                <div class="card-body">
+                    <p class="card-text my-1">   
+                        <table class="table table-borderless">
+                            <tbody>
+
+                                <% if !@emailAlert %>
+                                    <tr>
+                                        <div class="form-group">
+                                            <th scope="row"></th>
+                                            <td>
+                                                <small style="color:red">
+                                                    <strong>
+                                                        NOTE: Email cannot be changed after it has been set
+                                                    </strong>
+                                                </small>
+                                            </td>
+                                        </div>
+                                    </tr>
+                                <% end %>
+                                
+                                <tr>
+                                    <div class="form-group">
+                                        <th scope="row"><%= f.label :"First Name" %></th>
+                                        <td><%= f.text_field :fname, class: "form-control", placeholder: "First Name", id: "firstName" %></td>
+                                    </div>
+                                </tr>
+                                
+                                <tr>
+                                    <div class="form-group">
+                                        <th scope="row"><%= f.label :"Last Name" %></th>
+                                        <td><%= f.text_field :lname, class: "form-control", placeholder: "Last Name", id: "lastName" %></td>
+                                    </div>
+                                </tr>
+
+                                <tr>
+                                    <div class="form-group">         
+                                        <th scope="row"><%= f.label :image %></th>
+                                        <td style="color:grey">
+                                            <%= f.file_field :image %>
+                                            <% if f.object.image? %>
+                                                <small>
+                                                    <%= f.label :remove_image %>
+                                                </small>
+                                                <%= f.check_box :remove_image %> 
+                                            <% end %>                                                              
+                                        </td>
+                                    </div>  
+                                </tr>
+
+                                <tr>
+                                    <div class="form-group">
+                                        <th scope="row" style="color:grey"><%= f.label :"Email" %></th>
+                                        <td style="color:grey"><%= @user.email %></td>
+                                    </div>
+                                </tr>
+
+                                <tr id="pwdButton">
+                                    <div class="form-group">
+                                        <th scope="row"></th>
+                                        <td>
+                                            <button type ="button" class="btn btn-link" data-toggle="modal" data-target="#pwdModal">
+                                                Reset Password
+                                            </button>
+                                        </td>
+                                    </div>
+                                </tr>
+
+                            </tbody>
+                        </table>   
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="pwdModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            Password Reset
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">    
+                        <div style="margin-top:1%">
+                        </div>        
+                        <table class="table table-borderless">
+                            <tbody>  
+                                <tr>
+                                    <div class="form-group">
+                                        <th scope="row"><%= f.label :"Password" %></th>
+                                        <td><%= f.password_field :password, class: "form-control", placeholder: "Password" , id: "pwd" %></td>
+                                    </div>
+                                </tr>
+
+                                <tr>
+                                    <div class="form-group">
+                                        <th scope="row"><%= f.label :"Confirm Password" %></th>
+                                        <td><%= f.password_field :password, class: "form-control", placeholder: "Confirm Password", id: "pwdValidation" %></td>
+                                    </div>
+                                </tr>
+                            </tbody>
+                        </table>   
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onClick="clearUserPasswordFields()">Clear</button>
+                        <%= f.submit "Edit My Account", class: "btn btn-primary" %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%= f.submit "Edit My Account", class: "btn btn-lg btn-primary btn-block bottomPart" %>
+        <% end %>  
+    
+    </div>
+</div>
+
+
+
+

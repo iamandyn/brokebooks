@@ -1,0 +1,25 @@
+<div class="row outerAligned">
+  <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12 aligned">
+    <% provide(:title, "Log in") %>
+      <h1 class="h3 mb-3 font-weight-normal text-center text-top">Log in</h1>
+      <%= form_for(:session, url: login_path) do |f| %>
+        <div class="form-group">
+          <%= f.label :email %>
+          <%= f.email_field :email, class: 'form-control', placeholder: "Email" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password %>
+          <%= f.password_field :password, class: 'form-control', placeholder: "Password" %>
+        </div>
+        <br>
+        <%= f.label :remember_me, class: "checkbox inline" do %>
+        <%= f.check_box :remember_me %>
+        <span>Remember Me</span>
+      <% end %>
+      <%= f.submit "Log in", class: "btn btn-lg btn-primary btn-block bottomPart" %>
+    <% end %>
+    <br>
+    <p class="centered">New user? <%= link_to "Sign up now!", signup_path %></p>
+    <br>
+  </div>
+</div>

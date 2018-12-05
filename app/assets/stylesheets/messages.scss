@@ -1,0 +1,184 @@
+// Place all the styles related to the messages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.send-btn {
+	background-color: #00C851;
+	color: white;
+	width: 100px;
+}
+.send-btn:hover {
+	background-color: #007E33;
+}
+.send-btn:active {
+	background-color: #37474F;
+}
+.dateTimeStyle{
+	font-size: .7em;
+}
+
+
+
+
+
+//SMALLER THAN 576px
+    .body-main{     
+
+    }
+
+    .body-main-header{
+        text-align: center;
+    }
+
+    //Message Box
+    .body-main-msgs-bg{  
+        float: left;
+        height: 400px;
+        overflow-y: hidden;
+    }
+    .body-main-msgs-bg:hover {
+        display: inline-block;
+        overflow-y: scroll;
+        -ms-overflow-style: none;  // IE 10+
+        overflow: -moz-scrollbars-none;  // Firefox
+    }
+    .body-main-msgs-bg::-webkit-scrollbar { 
+        display: none;  // Safari and Chrome
+    }
+    .body-main-msgs-row{     
+
+    }
+    .body-main-msgs-each{     
+        display: inline-block;
+        padding-right: 5px;
+    }
+    .right{
+        text-align: right;
+    }
+    .msg-txt{ 
+
+    }
+
+    //Text Area
+    .body-main-form{
+        width: 90%;
+        display: inline-block;
+    }
+    .body-main-input-textarea{
+
+    }
+
+
+
+
+
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) { 
+
+	.body-main{
+    	position:relative;
+        top:10px;
+        left: 0;
+    	height: 560px;
+    }
+
+    .body-main-header{
+        position: relative;
+        left: 48px;
+        display: inline-block;
+        font-size: 1.6em;
+    }
+
+    //Message Box
+    .body-main-msgs-bg{	
+    	background-color: #e1f5fe;
+    	border-top: 3px solid black;
+    	border-left: 2px solid black;
+    	border-bottom: 1px solid black;
+    	border-right: 1px solid black;
+    	display: inline-block;
+    	position:absolute; 
+    	top: 40px; 
+    	left:0; 
+    	bottom: 130px; 
+    	right:0; 
+    	margin: auto;
+        padding-left: 15px;
+        padding-right: 15px;
+    	overflow-y: hidden;
+    }
+    .body-main-msgs-bg:hover {
+    	overflow-y: scroll;
+        padding-right: 0px;
+    }
+    .body-main-msgs-bg::-webkit-scrollbar { 
+        display: block;  // Safari and Chrome
+    }
+    .body-main-msgs-row{
+
+    }
+    .body-main-msgs-each{
+    	display: inline-block;
+    	text-align:left;
+    	min-width: 10px;
+    	max-width: 250px;
+    }
+    .right{
+    	text-align: right;
+    }
+    .msg-header{
+    	font-size: 1.1em;
+    }
+    .msg-txt{ 
+    	display: inline-block;
+    }
+
+    //Text Area
+    .body-main-form{
+    	position:absolute; 
+    	bottom:0; 
+    	left:0; 
+    	right:0; 
+    	height: 110px; 
+    	margin: auto;
+    }
+    .body-main-input-textarea{
+    	position: relative; 
+    	bottom: 0px;
+    }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { 
+	.body-main-msgs-each{
+    	max-width: 350px;
+    }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+	.body-main-msgs-each{
+    	max-width: 500px;
+    }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+	.body-main-msgs-each{
+    	max-width: 650px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

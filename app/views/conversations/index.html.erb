@@ -1,0 +1,45 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<!-- This Div makes the footer stay at the bottom -->
+<div class="" style="height: 436px;"></div>
+
+<div id="contacts" class="contacts-placement border border-dark bg-white">
+	<div class="text-center text-light bg-primary">
+		<div style="font-size: 1.4em;">Messages</div>
+	</div>
+
+	<table class="table table-borderless" style="position: absolute; top: 33px; left: 0; max-width: 350px; min-width: 300px;">
+		<tbody class="" style="position: absolute; top: 0; left: 0;">
+
+			<% @users.each do |user| %>
+				<% if user.id != current_user.id and @conversations.between(current_user.id, user.id).present?%>
+					<tr class="magsUserEach border border-dark">
+
+						<td scope="row" class="msgsUserEachImg m-0 p-0">
+							<%=image_tag("fallback/userImgDefault.png", alt: "Example Image", alt: "@user.fname user.lname", class: "rounded-circle bg-info my-1 ml-1", style: "height: 52px; width: 52px;")%> 
+						</td>
+
+						<th scope="row" class="msgsUserEachInfo m-0 p-0"> 
+							<div class="msgsUserEachName"><%= user.fname %> <%= user.lname %></div>
+							<div class="msgsUserEachEmail text-secondary pl-1">
+								<%= user.email %>
+							</div>
+						</th>
+
+						<td scope="row" class="msgsUserEachBtn m-0 py-auto">
+							<%= link_to 'Message', conversations_path(sender_id: current_user.id, recipient_id: user.id), method: 'post', :target => "target", class: "btn btn-md btn-primary", id: "btnContact" %>
+						</td>	
+						<br/>
+					</tr>
+				<% end %>
+			<% end %>
+		</tbody>
+	</table>
+</div>
+
+<!--Changes depending on the selected inbox -->
+<div class="msg-placement">
+	<iframe id="msg-iframe" name="target" allowTransparency="true" scrolling="no" frameborder="0" style="">
+    </iframe>
+</div>

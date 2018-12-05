@@ -1,0 +1,9 @@
+<% provide(:title, 'New Post') %>
+<h1>List New Book</h1>
+
+<%= render 'shared/book_error' %>
+<% if logged_in? %>
+	<%= render 'new_form' %>
+<% else %>
+	<% flash.now['danger'] = "You must be logged in to create a new post." %>
+<% end %>

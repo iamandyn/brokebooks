@@ -1,0 +1,139 @@
+// Place all the styles related to the conversations controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.msgsUserEach{
+
+}
+.msgsUserEachImg{
+	
+}
+.msgsUserEachInfo{
+	width: 105px; 
+	height: 80px;
+	overflow: hidden;
+}
+.msgsUserEachName{
+	font-size: 1em;
+	width: 105px; 
+	height: 30px;
+	overflow: hidden;
+}
+.msgsUserEachEmail{
+	width:105px;
+	height:20px;
+	overflow:hidden;
+	font-size: .8em;
+
+}
+.msgsUserEachBtn{
+	
+}
+
+
+//extra small devices (under 576px)
+	
+	.contacts-placement{
+		position: absolute; 
+		top: 56px; 
+		bottom: 0;
+		width:289px;
+		margin-left:15%;
+		z-index: 9;
+	}
+
+	.msg-placement{
+		display: none;
+		position: absolute;
+		top: 56px;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		min-height:600px;
+		overflow: hidden;
+		z-index: 10;
+	}
+	#msg-iframe{
+		position: relative; 
+		top: -56px; 
+		left: -45px; 
+		width: 110%;
+		height: 130%;
+	}
+
+	.popup{
+		
+	}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) { 
+
+	.popup{
+		display: none;
+	}
+
+	.contacts-placement{
+		display: block;
+		position: absolute; 
+		top: 56px; 
+		left: -58px; 
+		bottom: 0; 
+		width:289px;
+		margin-left:0;
+	}
+
+	.msg-placement{
+		display: block;
+		visibility: visible;
+		position: absolute;
+		top: 56px;
+		left: 235px;
+		right: -50px;
+		height: 91%;
+		overflow: hidden;
+	}
+	#msg-iframe{
+		position: relative; 
+		top:-60px; 
+		left: -50px; 
+		right:0; 
+		height: 590px;  
+		width: 100%; 
+		height: 110%;
+	}
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { 
+	.popup{
+		display: none;
+	}
+
+	.contacts-placement{
+		position: absolute; 
+		top: 56px; 
+		left: 0px; 
+		bottom: 0;
+		width:280px;
+		margin-left:0;
+	}
+	.msg-placement{
+		display: block;
+		visibility: visible;
+		position: absolute;
+		top: 56px;
+		left: 289px;
+		bottom: 0;
+		right: -35px;
+		overflow: hidden;
+	}
+	#msg-iframe{
+		position: relative; 
+		top:-55px; 
+		left: -40px; 
+		bottom: 0;
+		right:-20px;  
+		width: 100%; 
+	}
+}

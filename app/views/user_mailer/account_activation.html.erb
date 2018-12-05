@@ -1,0 +1,10 @@
+<h1>BrokeBooks</h1>
+
+<p>Hello <%= @user.fname %>,</p>
+
+<p>
+Welcome to BrokeBooks! Click on the following link to activate your account:
+</p>
+
+<%= link_to "Activate", edit_account_activation_url(@user.activation_token,
+                                                    email: @user.email) %>

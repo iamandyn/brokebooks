@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= yield(:title) %></title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+  <!-- <link rel="brokebooks icon" type="image/png" href="images/favicon.ico"/> -->
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!-- ************* Favicon ************* -->
+    <%= favicon_link_tag asset_path('favicon.ico'), :rel => 'icon', :type => "image" %>
+  </head>
+
+  <body>
+  	<!-- DO NOT MOVE THIS: Renders the navigation bar on each page. -->
+    <%= render 'layouts/navbar' %>
+
+
+  	<div class="container mt-3">
+  		<div id="content-container">
+  		    <% flash.each do |message_type, message| %>
+  		    	 <div class="alert alert-<%= message_type %>"><%= message %></div>
+  		    <% end %>
+  		    <%= yield %>
+  		</div>
+  	</div>
+
+    <!-- This renders the login modal -->
+    <%= render 'layouts/modal_signIn' %>  
+    <!-- This renders the footer on all pages but /messages -->
+    <% if !current_page?("/messages") and !current_page?(@conversations_path) %>
+      <%= render 'layouts/footer' %>
+    <% end %>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+   
+   <script>
+    function connectToBookAPI() {
+      var isbn10 = document.getElementById("isbn10").value.trim(), isbn13 = document.getElementById("isbn13").value.trim();
+      if ((isbn10 == "" && isbn13 == "") || (isbn10.length != 10 && isbn13.length != 13)) {
+        isFillable("block");
+        return;
+      }
+      checkDigits(isbn13.length == 13 ? isbn13 : isbn10) ? getBook(isbn13.length == 13 ? isbn13 : isbn10) : isFillable("block");
+    }
+    function checkDigits(isbn) {
+      if(isbn.length == 13 && isbn.substring(0,3).localeCompare("978") != 0) {
+        return false;
+      }
+      for(i = 0; i < isbn.length; i++) {
+        if(isbn.charCodeAt(i) < 48 || isbn.charCodeAt(i) > 57) {
+          return false;
+        }
+      }
+      return true;
+    }
+    function getBook(isbn) {
+      // return fetch("https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn + "&key=AIzaSyAfGsYAIletzGKRLE46MhaZuXA26K2LDqA")
+      //   .then(response => response.json())
+      //   .then((data) => {
+      //     bookInfo = data["items"];
+      //   })
+      //   .catch((err) => {
+      //     isFillable("block");
+      //   });
+      fetch("https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn + "&key=AIzaSyAfGsYAIletzGKRLE46MhaZuXA26K2LDqA")
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(myJson) {
+          setValues(myJson['items']);
+          swapIsbns();
+        });
+    }
+    function setValues(bookInfo) {
+      if(bookInfo == undefined || bookInfo == null) {
+        isFillable("block");
+      }
+      else {
+        isFillable("none");
+        document.getElementById("title").value = bookInfo[0]['volumeInfo']['title'];
+        document.getElementById("author").value = getAuthors(bookInfo[0]['volumeInfo']['authors']);
+        document.getElementById("isbn13").value = getIsbn(bookInfo[0]['volumeInfo']['industryIdentifiers'], "ISBN_13"); 
+        document.getElementById("isbn10").value = getIsbn(bookInfo[0]['volumeInfo']['industryIdentifiers'], "ISBN_10");  
+        document.getElementById("description").value = bookInfo[0]['volumeInfo']['description'];
+      }
+    }
+    function isFillable(msg) {
+      document.getElementById("unableToFill").style.display = msg;
+    }
+    function getIsbn(isbns, type) {
+      if(isbns.length == 1) {
+        return isbns[0]['type'].localeCompare(type) == 0 ? isbns[0]['identifier'] : "";
+      }
+      return isbns[0]['type'].localeCompare(type) == 0 ? isbns[0]['identifier'] : isbns[1]['identifier'];
+    } 
+    function getAuthors(authors) {
+      if(authors.length == 1) {
+        return authors[0];
+      }
+      var str = "";
+      authors.forEach(function(author) {
+        str += ", " + author;
+      });
+      return str.substring(2);
+    }
+    function clearAllBookFields() {
+      isFillable("none");
+      document.getElementById("title").value = "";
+      document.getElementById("author").value = "";
+      document.getElementById("isbn13").value = "";
+      document.getElementById("isbn10").value = "";
+      document.getElementById("description").value = "";
+      document.getElementById("price").value = "";
+    }
+    function swapIsbns() {
+      let isbn10 = document.getElementById("isbn10"), isbn13 = document.getElementById("isbn13");
+      isbn10.value = isbn10.value == undefined ? "" : isbn10.value;
+      isbn13.value = isbn13.value == undefined ? "" : isbn13.value;
+      if(isbn10.value.length == 13 && isbn13.value.length == 10) {
+        let temp = isbn10.value;
+        isbn10.value = isbn13.value;
+        isbn13.value = temp;
+      }
+      else if((isbn10.value == 13 && isbn13.value == 0) || (isbn13.value == 10 && isbn10.value == 0)) {
+        if(isbn10.value == 13) {
+          isbn13.value = isbn10.value;
+          isbn10.value = "";
+          return;
+        }
+        isbn10.value = isbn13.value;
+        isbn13.value = "";
+      }
+    }
+    function clearUserPasswordFields() {
+      document.getElementById("pwd").value = "";
+      document.getElementById("pwdValidation").value = "";
+    }
+   </script>
+
+   </body>
+</html>

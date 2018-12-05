@@ -1,0 +1,107 @@
+<style type="text/css">
+	.colorful {
+		outline-color: #f2f2f0;
+		border-color: #f2f2f0;
+		color: #f2f2f0;
+	}
+
+	.dropdown-item.whiteish:hover {
+		background-color: #4c4c4c;
+	}
+
+
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<%= link_to "BrokeBooks", root_path, class: "navbar-brand" %>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" >
+	    <span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav mr-auto">
+
+	    	<% if current_page? controller:'home' %>
+	      		<li class="nav-item active">
+	      	<% else %>
+	      		<li class="nav-item">
+	      	<% end %>
+	        	<%= link_to "Home", root_path, class: "nav-link" %> <span class="sr-only">(current)</span>
+	      	</li>
+
+	      	<% if current_page? '/books' %>
+	      		<li class="nav-item active">
+	      	<% else %>
+	      		<li class="nav-item">
+	      	<% end %>
+	        	<%= link_to "All Listings", books_url, class: "nav-link" %>
+	      	</li>
+
+	      	<% if logged_in? %>
+
+	      		<!-- If stmt here for dynamic nav links-->
+				<li class="nav-item dropdown">
+	      			<%= link_to "Users", '/users', class: "nav-link" %>
+	      		</li>
+	      		<li class="nav-item dropdown">
+            		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          				Account
+        			</a>
+        	  		<div class="dropdown-menu bg-dark font-light" aria-labelledby="navbarDropdown">
+	          			<%= link_to "My Profile", current_user, class: "dropdown-item whiteish text-light" %>
+	          			<%= link_to "Messages", messages_url, class: "dropdown-item whiteish text-light" %>
+
+	          			<div class="dropdown-divider"></div>
+
+	          			<%= link_to "Log out", logout_path, method: :delete, class: "dropdown-item text-white whiteish" %>
+	          		</div>
+          		</li>
+
+        	<% end %>
+	    </ul>
+	    <%= form_tag books_path, {:method => "get", class:"form-inline my-2 my-lg-0"} do %>
+	    	<%= text_field_tag :search, 
+	    		params[:search], 
+	    		#id: 'books_search', uncomment for searchkick
+	    		#autocomplete: :off, uncomment for searchkick
+	    		class: "form-control mr-sm-2", 
+	    		placeholder: "Search"%>
+	    	<%= hidden_field_tag :direction, params[:direction] %>
+	    	<%= hidden_field_tag :sort, params[:sort] %>
+	    	<%= submit_tag "Search", class: "btn btn-outline-light my-2 my-sm-0" %>
+
+				<!-- Individual login button start -->
+								<ul class="navbar-nav mr-auto">
+
+						<% if logged_in? %>
+							<% next %>
+						<% else %>
+								<% if current_page? '/login' %> <li class="nav-item active"> <% else %> <li class="nav-item"> <% end %>
+						<button type="button" class="btn btn-outline-light ml-2" style="text-decoration: none;" data-toggle="modal" data-target="#signInModal">
+							Log In
+						</button>
+								</li>
+
+						<% end %>
+							</ul>
+
+				<!-- Individual login button end -->
+	    <% end %>
+
+		<!-- Try for elastic search 
+	    <%#= form_tag books_path, {:method => "get", class:"form-inline my-2 my-lg-0"} do %>
+ 			<p>
+  				<%#= text_field_tag :search, params[:search] %>
+  				<%#= hidden_field_tag :direction, params[:direction] %>
+	    		<%#= hidden_field_tag :sort, params[:sort] %>
+  				<%#= submit_tag "Go", name: nil %>
+ 			</p>
+		<%# end %>  -->
+
+
+	   <!-- <form class="form-inline my-2 my-lg-0">
+	      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+	      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+	    </form> -->
+	</div>
+</nav>

@@ -1,0 +1,297 @@
+<script>
+
+//the function that changes out the bigger picture on hover. It adds the mouseover event listener twice.
+//onMouseOver, it uses the context sensitive "this" to extract the img src attribute from which it'll use to swap out with the bigger picture's swap attribute.
+//then the width is resized appropriately
+	function changeImage(){
+
+		$(".clickImage img").mouseover(function(){
+			var toChange = $(this).attr("src");
+			$("#bookView img").attr("src", toChange);
+			$("#bookView img").css("width", "200");
+		});
+
+
+	}
+
+</script>
+<% provide(:title, @book.title) %>
+<div class="container pb-4 text-left">
+	<div class="row title">
+		<div class="col my-3">
+			<h1>
+				<span class="no-gutters">
+					<%= @book.title %>
+				</span>
+				<span class="text-muted lead" style="font-size: .4em;">
+					by <%= @book.author %>
+				</span>
+				<span class="p-1 float-right text-success border border-success rounded bg-light">
+					$ <%= @book.price %>
+				</span>
+			</h1>
+		</div>
+	</div>
+	<div class="row">
+
+		<!-- New Thumbnail -->
+		<div class="col-xl-3 col-lg-4 col-md-5 pl-5 ml-4 picturesView">
+			<!-- frame is for the purpose of aligning the bigger picture -->
+			<div id="frame">
+				<!-- bookView is the placeholder for where other images will appear in on hover -->
+			<div id="bookView">
+				<% if @book.cover_image.attached? %>
+					<%= image_tag @book.cover_image.variant(resize: "200x300"), class:"coverImage" %><br/>
+				<% else %>
+					<%= image_tag("fallback/book/medium_default.png") %>
+				<% end %>
+			</div>
+		</div>
+		<span class="lead" style="font-size: 1.15em;">Other Book Pictures: </span>
+		<div class="clickImage">
+			<% if @book.condition_images.attached? %>
+				<!-- the main book cover which can come back on mouse over -->
+				<% if @book.cover_image.attached? %>
+					<%= link_to image_tag(@book.cover_image, width: "70"), @book.cover_image, onmouseover: "changeImage()", class: "picture" %>
+				<% else %>
+					<%= image_tag("fallback/book/thumb_default.png") %>
+				<% end %>
+				<!-- the for loop pulls out and lays out all the uploaded book photos. Onmouseover it displays the larger version of the book photo and puts it into bookView -->
+				<% @book.condition_images.each do |condition_image| %>
+					<% if condition_image.variable?%>
+						<%= link_to image_tag(condition_image, width: "70"), condition_image, onmouseover: "changeImage()", class: "picture" %>
+					<% end %>
+				<% end %>
+			<% end %>
+</div>
+
+
+
+
+
+
+
+						<!-- START OF CAROUSEL VERSION FOR THE BOOK VIEWS-->
+			<!--<div class="mt-2 moved">
+
+						<% count = 0 %>
+						<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+							<div class="carousel-inner">
+
+											<% @book.condition_images.each do |condition_image| %>
+
+												<% if count == 0 %>
+
+												<div class="carousel-item active">
+														<%= link_to image_tag(condition_image.variant(resize: "200x300")), condition_image, class: "d-block w-20" %>
+												</div>
+												<% count = count + 1 %>
+
+											<% else %>
+
+											<div class="carousel-item">
+										<%= link_to image_tag(condition_image.variant(resize: "200x300")), condition_image, class: "d-block w-20" %>
+											</div>
+
+											<% count = count + 1 %>
+
+										<% end %>
+											<% end %>
+
+										</div>
+
+
+											<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+													<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+													<span class="sr-only">Previous</span>
+												</a>
+												<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+													<span class="carousel-control-next-icon" aria-hidden="true"></span>
+													<span class="sr-only">Next</span>
+												</a>
+
+									</div>
+			</div>-->
+			<!-- END OF CAROUSEL VERSION FOR THE BOOK VIEWS-->
+		</div>
+
+		<!--END OF New Thumbnail -->
+	<!--</div>
+
+
+		<div class="row">-->
+		<div class="col">
+			<div class="card" >
+				<div class="card-header text-center">
+					<span style="font-size: 2em;">
+						<strong>Info </strong>
+					</span>
+					<div class="text-right float-right">
+						<% if logged_in? %>
+							<% if current_user.id == @book.user_id %>
+								<%= link_to "Edit", edit_book_path(@book), class: "btn btn-outline-primary mr-3" %>
+								<% if current_user.id == @book.user_id %>
+									<%= link_to "Conversations", messages_path, class: "btn btn-outline-primary mr-3" %>
+								<% end %>
+							<% else %>
+								<% if current_user.id != @book.user_id %>
+									<%= link_to "Contact Seller", conversations_path(sender_id: current_user.id, recipient_id: @book.user_id), method: 'POST', class: "btn btn-primary" %>
+								<% elsif current_user.id == @book.user_id %>
+									<%= link_to "Conversations", messages_path %>
+								<% else %>
+									<%= link_to "Log In To Buy", login, class: "btn btn-primary" %>
+								<% end %>
+							<% end %>
+						<% else %>
+							<%= link_to "Log In To Buy", login, class: "btn btn-primary" %>
+						<% end %>
+					</div>
+				</div>
+
+
+<!--#############################################
+<#% if user_signed_in? && current_user.id != @trade.user_id %>
+      <%#= link_to "Message #{@trade.user.name}", conversations_path(sender_id: current_user.id, recipient_id: @trade.user.id), method: 'post', class:"button is-link" %>
+    <%# elsif user_signed_in? && current_user.id == @trade.user_id  %>
+      <3%= link_to "Conversations", conversations_path %>
+    <%# else %>
+
+    <%#= link_to "Sign up to message #{@trade.user.name}", new_user_registration_path %>
+    <%# end %>
+
+ #############################################-->
+				<div class="card-body" style="height: 400px; position: relative;">
+					<div>
+						<h3>
+							<% if @book.condition == "Like New" %>
+								<strong>Condition: </strong>
+								<span class="px-2 my-2 text-success border border-success rounded" style="font-size: 1em; font-weight: bold; position: absolute; top: 12px; left: 200px;">
+									<%= @book.condition %>
+								</span>
+							<% elsif @book.condition == "Good" %>
+								<strong>Condition: </strong>
+								<span class="px-2 my-2 text-warning border border-warning rounded" style="font-size: 1em; font-weight: bold; position: absolute; top: 12px; left: 200px;">
+									<%= @book.condition %>
+								</span>
+							<% elsif @book.condition == "Acceptable" %>
+								<strong>Condition: </strong>
+								<span class="my-2 text-danger border border-danger rounded" style="font-size: 1em; font-weight: bold; position: absolute; top: 12px; left: 200px; margin-left: -35px;">
+									<%= @book.condition %>
+								</span>
+							<% end %>
+						</h3>
+					</div>
+
+					<div class="" style="">
+						<div class="float-left">
+							<h3><strong>Description: </strong></h3>
+						</div>
+						<div class="border rounded float-left px-2 pb-2" style="position: absolute; top: 100px; left: 20px; bottom: 60px; right: 20px; overflow: scroll;">
+								<p class="pt-2"> <%= @book.description %></p>
+						</div>
+					</div>
+
+
+					<div class="" style="position: absolute; bottom: 0; right: 0;">
+					  	<div class="mt-auto p-2">
+					  		<% if logged_in? %>
+							<% if current_user.id == @book.user_id %>
+								<%= link_to "Delete", book_path(@book), method: :delete, data: { confirm: "Are you sure?"}, class: "btn btn-outline-primary"  %>
+<!--							<%# else %>
+								<%#= link_to "Contact Seller", book_path(@book), class: "btn btn-primary" %> -->
+							<% end %>
+						<% else %>
+							<%= link_to "Log In To Buy", login, class: "btn btn-primary" %>
+						<% end %>
+					  	</div>
+					</div>
+
+
+
+							<!--	<p class="pt-2">-->
+									<!-- function that loops images -->
+									<%# @book.condition_images.each do |condition_image| %>
+								      	<!--<div class="card-body m-2">
+								      		<div class="row">
+								      			<div class="col-auto">-->
+								      				<%# if condition_image.variable? %>
+														<%#= link_to image_tag(condition_image), condition_image %><!--<br />-->
+													<%# end %>
+								      			<!--</div>
+								      		</div>
+								   		</div>-->
+									<%# end %>
+									<!-- end of function -->
+								<!--</p>-->
+
+
+
+
+				</div>
+			</div>
+			<div class="isbnBlock">
+				<span class="lead stuff" style="font-size: 1.15em;">
+					ISBN-13: <%= @book.isbn13 %> <br />
+					ISBN-10: <%= @book.isbn10 %>
+				</span>
+			</div>
+		</div>
+	</div>
+
+			<!-- MULTIPLE IMAGES
+				<div class="card-header text-center">
+					<span style="font-size: 2em;"><strong>Images</strong></span>
+				</div>
+				<div class="card-body" style="height: 200px; position: relative;">
+					<div class="d-none d-lg-block d-xl-block">
+						<%#= @book.condition_images.each do |condition_image|%>
+							<%# if condition_image.variable? %>
+								<%#= link_to image_tag(condition_image), condition_image %><br />
+							<%# end %>
+						<%# end %>
+					</div>
+				</div>
+
+			 End of Multiple Images -->
+
+			<!-- <table class="w-100 my-3 clearfix" style="max-width: 600px;">
+				<tr class="">
+					<td class="float-right">
+						<h3><strong>Author: </strong></h3>
+					</td>
+					<td class="">
+						<h3><%= @book.author %></h3>
+					</td>
+				</tr>
+				<tr class="">
+					<td class="float-right">
+						<h3><strong>ISBN: </strong></h3>
+					</td>
+					<td>
+						<h3><%= @book.isbn13 %></h3>
+					</td>
+				</tr>
+				<tr class="">
+					<td class="float-right">
+						<h3><strong>Condition: </strong></h3>
+					</td>
+					<td>
+						<h3><%= @book.condition %></h3>
+					</td>
+				</tr>
+				<tr class="">
+					<td class="float-right">
+						<h3><strong>Price: </strong></h3>
+					</td>
+					<td>
+						<h3>$ <%= number_with_precision(@book.price, :precision => 2) %></h3>
+					</td>
+				</tr>
+			</table>
+
+			<div style="min-width: 600px;">
+				<h3 class="float-left"><strong>Description: </strong></h3><br/><br/>
+				<h5><%= @book.description %></h5>
+			</div> -->
+
+</div>

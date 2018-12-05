@@ -1,0 +1,45 @@
+// Place all the styles related to the Users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+h1.text-top{
+  margin-top: 30px;
+}
+
+.aligned {
+  vertical-align: middle;
+  justify-content: center;
+  margin: 10px auto;
+}
+
+
+.form-group {
+  margin: 20px 0px;
+  font-size: 14px;
+  padding: 0px 10px;
+
+}
+
+.outerAligned {
+  margin-top: 20px;
+}
+
+.bottomPart {
+  margin-bottom: 20px;
+}
+
+h1.signUp {
+  text-align: center;
+  margin: 10px 0px;
+}
+
+
+
+@media only screen and (min-width: 575px){
+  .aligned {
+    border: 0.5px solid Silver;
+    border-radius: 10px;
+    box-shadow: 7px 5px LightGrey;
+  }
+}

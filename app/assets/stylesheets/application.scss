@@ -1,0 +1,220 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+@import "bootstrap";
+
+.div-center{
+	margin: 0 auto;
+}
+
+.bg-red{
+	background-color: red;
+}
+
+.btn.scaled {
+	margin: 0px auto;
+	vertical-align: middle;
+	justify-content: center;
+	text-align: center;
+}
+
+@media only screen and (min-width: 992px) {
+	.card.alignCenter {
+		margin: 0px auto;
+	}
+
+}
+@media only screen and (max-width: 768px){
+
+	.btn.scaled {
+		margin: 0px;
+		width: 100%;
+		font-size: 1em;
+		word-wrap: break-word;
+		overflow-wrap: break-word;
+		white-space: normal;
+	}
+
+}
+
+
+@media only screen and (max-width: 992px){
+
+	.card.alignCenter {
+		vertical-align: middle;
+		justify-content: center;
+		margin: 0 auto;
+	}
+
+}
+
+tableLink{
+  color: white;
+}
+
+body{
+	/*background-color: #efefef !important;*/
+}
+
+.card-header.bg-secondary.text-white {
+	background-color: #1b3c59 !important;
+	color: #efefef !important;
+}
+
+.card-body.featured, .accountStuff .card-body, .aboutBox .card-body {
+	background-color: #F5F5F5 !important;
+}
+
+.card.text-center.alignCenter {
+	box-shadow: 3px 5px 3px 0px #d1d1d1;
+	border-color: #d1d1d1 !important;
+
+}
+
+h3.card-header.card-header.bg-secondary.text-white{
+	text-align: center;
+}
+
+.card-text.aboutUs, .smallerBox .card-text {
+	font-size: 0.9em;
+}
+
+.smallerBox{
+	display: flex;
+}
+
+.smallerBox h4, .smallerBox p, .smallerBox .card-body {
+	display: block;
+	clear: both;
+}
+
+
+#unique {
+	box-shadow: 5px 7px 3px 0px #b5b5b5;
+}
+
+.backgroundArt {
+	position: absolute;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	width: 280px;
+	z-index: -1;
+	opacity: 0.1;
+}
+
+.aboutBox .card-header.bg-secondary.text-white{
+	background-color: #456173 !important;
+}
+
+.accountStuff .card-header.bg-secondary.text-white{
+	background-color: #456173 !important;
+}
+
+.card-footer.card-header.bg-secondary.text-white a{
+	color: white !important;
+}
+
+.btn.dirtyGreen {
+	background-color: #86a294;
+	border-color: #687d73;
+
+	color: white;
+}
+
+
+.btn.dirtyGreen:hover {
+	background-color: #687d73;
+	border-color: #687d73;
+
+	color: white;
+}
+
+.btn.dirtyGreen:active {
+background-color: #3e4b45;
+border-color: #687d73;
+
+color: white;
+}
+
+//For Recently Posted Books
+.bookInfo{
+	position: absolute;
+	top:10px;
+	left:0;
+	right:0;
+	/*height: 200px;*/
+	overflow: hidden;
+}
+.bookTitle{
+	font-size:1.2em;
+	/*height: 30px;*/
+	overflow: hidden;
+}
+.bookAuthor{
+	/*position: absolute;
+	top:20px;
+	left:0;
+	right:0;*/
+	font-size:.6em;
+	/*height: 30px;*/
+	overflow: hidden;
+}
+.bookAuthorDown{
+	position: absolute;
+	top:45px;
+	left:0;
+	right:0;
+	font-size:.6em;
+	height: 30px;
+	overflow: hidden;
+}
+.bookButton{
+	position: absolute;
+	bottom:0;
+	left:0;
+	right:0;
+}
+
+
+.authorStyled {
+	top: 20px;
+}
+
+
+.styledImage {
+	margin: 5% auto 0px auto;
+}
+
+.bookTitle.card-title {
+	font-size: 1em;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	line-height: 120%;
+}
+
+.bookAuthor.authorStyled {
+		margin-top: 0%;
+
+}
+
+.bookPrice {
+	margin: 0px;
+}
+
+.imageArea {
+	margin-top: 0px;
+	padding-top: 0px;
+}

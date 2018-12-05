@@ -1,0 +1,102 @@
+ <!-- VALIDATION -->
+  <% if @over_ten %>
+     <!-- <%= link_to 'Show Previous', '?m=all' %> -->
+  <% end %>
+  <!-- VALIDATION -->
+
+<script>
+  //onLoad -> Scroll to the bottom of the messages div
+  window.onload=function () {
+       var objDiv = document.getElementById("scroller");
+       objDiv.scrollTop = objDiv.scrollHeight;
+  }
+
+  //Tooltip Settup
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+<!-- START PAGE -->
+<div class="body-main">
+
+  <div class="body-main-header">
+    <div class="px-2" style="">
+      <div> 
+
+        <!-- Assigns sender and receiver --> 
+        <% user1 = User.find(@conversation.sender_id) %>
+        <% user2 = User.find(@conversation.recipient_id) %>
+        <% if user1.id == current_user.id %>
+          <% receiver = user2 %>
+        <% else %>
+          <% receiver = user1 %>
+        <% end %>
+
+        Messages With
+        <strong><%= receiver.fname %> <%= receiver.lname %> </strong>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="scroller" class="body-main-msgs-bg ml-5 rounded">
+    <!-- <div class="body-main-msgs pl-3 pr-0"> -->
+      <% @messages.each do |message| %>
+        <% if message.body %>
+          <% user = User.find(message.user_id) %>
+              <% if user == current_user%>
+
+                <!-- Current User -->
+                <div class="body-main-msgs-row my-1 right">
+                  <div class="body-main-msgs-each bg-success text-white rounded" data-toggle="tooltip" data-placement="left" title="<%= message.message_time %>">
+                    <!-- <div class="msg-header text-white px-3 right">
+                      <strong><i>You</i></strong> 
+                    </div> -->
+                    <span class="msg-txt px-2 py-1">
+                      <%= message.body %>
+                    </span>
+                  </div> <br/>
+                </div>
+
+              <% else %>
+
+                <!-- Person They're Messaging-->
+                <div class="body-main-msgs-row my-1">
+                  <div class="body-main-msgs-each bg-info text-white rounded" data-toggle="tooltip" data-placement="right" title="<%= message.message_time %>">
+                    <div class="msg-header text-white px-1">
+                      <strong><i></i></strong> 
+                    </div>
+                    <span class="msg-txt px-2 py-1">
+                      <%= message.body %>
+                    </span>
+                  </div><br/>
+                </div>
+
+              <% end %>
+
+
+        <% end %>
+      <% end %>
+    <!-- </div> -->
+  </div> 
+
+  <div class="body-main-form mx-5 my-2">
+    <div class="body-main-input-textarea m-1">
+      <%= form_for [@conversation, @message], html: {class: ""} do |f| %>
+        <div class="field m-1">
+          <%= f.text_area :body, class: "form-control bg-light" %>
+        </div>
+          <%= f.text_field :user_id, value: current_user.id, type: "hidden" %>
+        <div class="m-1 right">
+          <%= f.submit "Send", class: "btn send-btn" %>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+
+</div>
+
+
+

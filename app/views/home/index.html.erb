@@ -1,0 +1,226 @@
+<style type="text/css">
+
+	body {
+		background-color: #efefef !important;
+	}
+
+</style>
+<!-- <%= react_component 'Main' %> -->
+<div class="container-fluid">
+<% content_for(:title, "BrokeBooks") %>
+
+<!-- BEGIN 1ST ROW -->
+	<div class="row mt-3 mb-5">
+		<div class="col-12">
+			<div id="unique">
+				<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+				  	<ol class="carousel-indicators">
+				    	<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+				    	<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+				    	<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+				    	<li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+				 	</ol>
+				  	<div class="carousel-inner">
+				    	<div class="carousel-item active">
+				      		<%=image_tag("homepage/booksIntoCash.png", alt: "Example Image", class: "d-block w-100")%>
+				    	</div>
+				   		<div class="carousel-item">
+				      		<%=image_tag("homepage/createYourAccount.jpg", alt: "Example Image", class: "d-block w-100")%>
+				    	</div>
+				    	<div class="carousel-item">
+				      		<%=image_tag("homepage/postYourBooks.jpg", alt: "Example Image", class: "d-block w-100")%>
+				    	</div>
+				    	<div class="carousel-item">
+				      		<%=image_tag("homepage/makeExtraCash.jpg", alt: "Example Image", class: "d-block w-100")%>
+				    	</div>
+				  	</div>
+				  	<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+				    	<span class="carousel-control-prev-icon" aria-hidden="false"></span>
+				    	<span class="sr-only">Previous</span>
+				  	</a>
+				  	<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+				   	 	<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				    	<span class="sr-only">Next</span>
+				  	</a>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- END 1ST ROW -->
+
+</div>
+<div class="container mt-3">
+
+	<!-- BEGIN 2ND ROW (1 CARD) -->
+	<div class="row m-sm-12 mt-3 ">
+		<div class="col-12">
+			<div class="card text-center">
+			    <h3 class="card-header bg-secondary text-white">
+			    	Recently Added Books
+			    </h3>
+			  	<div class="card-body featured div-center w-100" style="padding-left: 0px; padding-right: 0px;">
+
+
+			   		<div id="carouselExampleFade" class="carousel slide carousel-fade div-center w-100" data-ride="carousel" data-interval="false" >
+						<div class="carousel-inner div-center w-75">
+							<!-- First Page -->
+							<div class="carousel-item active">
+								<div class="row">
+									<!-- Inner Card-->
+									<% @books1.each do |book| %>
+										<div class="col my-2">
+									   	<div class="card text-center alignCenter" style="width: 18rem; height: 18rem;">
+											  	<div class="card-body" style="position: relative;">
+											  		<div class="bookInfo">
+											  			<% if book.title.length < 22 %>
+												    		<div class="bookTitle card-title">
+												    	<% else %>
+												    		<div class="bookTitle card-title">
+												    	<% end %>
+												    		<strong><%= book.title %></strong>
+												    	</div>
+															<div class="bookPrice">
+																$<%= book.price %>
+															</div>
+												    	<div class="bookAuthor authorStyled">
+												    		By: <%= book.author %>
+												    	</div>
+												    	<div class="imageArea">
+												    		<% if book.cover_image.attached? %>
+																<%= image_tag book.cover_image.variant(resize: "100X140"), class:"coverImage styledImage" %><br/>
+															<% else %>
+																<%= image_tag("fallback/book/medium_default.png") %>
+															<% end %>
+												    	</div>
+											  		</div>
+												  	<div class="bookButton mb-3">
+												  		<%= link_to  "View Book", book, class: "btn btn-default dirtyGreen"%>
+												  	</div>
+											  	</div>
+											</div>
+									   </div>
+
+									<% end %>
+
+							    </div>
+						    </div>
+						    <!-- Second Page -->
+						    <div class="carousel-item">
+						      	<div class="row">
+
+									<!-- Inner Card-->
+									<% @books2.each do |book| %>
+										<div class="col my-2">
+									   	<div class="card text-center alignCenter" style="width: 18rem; height: 18rem;">
+											  	<div class="card-body" style="position: relative;">
+											  		<div class="bookInfo">
+												    	<% if book.title.length < 22 %>
+												    		<div class="bookTitle card-title">
+												    			<strong><%= book.title %></strong>
+													    	</div>
+																<div class="bookPrice">
+																	$<%= book.price %>
+																</div>
+													    	<div class="bookAuthor">
+													    		By: <%= book.author %>
+													    	</div>
+												    	<% else %>
+												    		<div class="bookTitle card-title" style="font-size: 1em; height: 45px;">
+												    			<strong><%= book.title %></strong>
+													    	</div>
+													    	<div class="bookAuthorDown">
+													    		By: <%= book.author %>
+													    	</div>
+															<% end %>
+
+																<div class="imageArea">
+													    		<% if book.cover_image.attached? %>
+																	<%= image_tag book.cover_image.variant(resize: "100X140"), class:"coverImage styledImage" %><br/>
+																<% else %>
+																	<%= image_tag("fallback/book/medium_default.png") %>
+																<% end %>
+													    	</div>
+											  		</div>
+												  	<div class="bookButton mb-3">
+												  		<%= link_to  "View Book", book, class: "btn btn-default dirtyGreen"%>
+												  	</div>
+											  	</div>
+											</div>
+									   </div>
+
+									<% end %>
+
+							    </div>
+						    </div>
+						    <!-- Third Page -->
+
+						</div>
+						<a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+						  	<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						    <span class="sr-only">Previous</span>
+						</a>
+						<a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+						    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+						    <span class="sr-only">Next</span>
+						</a>
+					</div>
+
+			  	</div>
+			  	<div class="card-footer card-header bg-secondary text-white">
+
+			  		<!-- Asks user to sign in, unless signed in. If signed in, offer link to listings -->
+			  		<% if logged_in? %>
+			  			<%= link_to  "Start Browsing", "/books", class: "text-info"%>
+			  		<% else %>
+			    		<%= link_to  "Sign in", login_path, class: "text-info"%>
+			    	<% end %>
+
+			  	</div>
+			</div>
+		</div>
+	</div>
+	<!-- END 2ND ROW -->
+
+	<!-- BEGIN 3RD ROW (2 CARDS) -->
+	<div class="row m-sm-6 mt-3 mb-5 smallerBox">
+    	<div class="col-6 smallerBox aboutBox">
+      		<div class="card">
+			  	<h3 class="card-header card-header bg-secondary text-white">About Us</h3>
+			  	<div class="card-body">
+				    <h4 class="card-title titlesOrSomething">Medium for Reselling Textbooks!</h4>
+				    <p class="card-text aboutUs">Most students are nearly broke, but still need to buy textbooks for their classes and other students just want to sell their old useless textbooks. We're a medium where these two sides can meet up and make an exchange!</p>
+			  	</div>
+			</div>
+    	</div>
+
+    	<% if logged_in? %>
+    		<div class="col-6 smallerBox accountStuff">
+	      		<div class="card">
+				  	<h3 class="card-header card-header bg-secondary text-white">Getting Started</h3>
+				  	<div class="card-body smallerBox">
+					    <h4 class="card-title titlesOrSomething">Start Earning</h4>
+					    <p class="card-text">Hey there newcomer, click the link to post a book ans start earning cash!</p>
+							<div class="text-center">
+					    <%= link_to  "Explore Books", books_path , class: "btn btn-default scaled dirtyGreen"%>
+						</div>
+				  	</div>
+				</div>
+	    	</div>
+    	<% else %>
+	    	<div class="col-6 smallerBox accountStuff">
+	      		<div class="card">
+				  	<h3 class="card-header card-header bg-secondary text-white">Sign Up</h3>
+				  	<div class="card-body">
+					    <h4 class="card-title titlesOrSomething">Start Earning</h4>
+					    <p class="card-text">Signup today and start making money selling your old used textbooks!</p>
+							<div class="text-center">
+					    <%= link_to  "Create Your Account!", signup_path, class: "btn btn-default scaled dirtyGreen"%>
+						</div>
+				  	</div>
+				</div>
+	    	</div>
+    	<%end%>
+  	</div>
+  	<!-- END 3RD ROW -->
+<!-- END BODY CONTENT CONTAINER -->
+</div>
